@@ -1,0 +1,52 @@
+
+Pour CRÉER UN NOUVEL OBJECT dans object.js
+
+Il faut créer une classe héritant de My_Object, comme suit:
+
+    class Subclass_Name extends My_Object {
+        constructor(x, y, object_image, hitBox /*ajoutez de nouveaux arguments si besoin*/) {
+            super(x, y, object_image, hitBox, "group_name");
+            /*ajoutez de nouvelles propriétés si besoin*/
+        }
+
+        auto_actions(cnv) {
+            return;
+        }
+    }
+
+"group_name" (this.group) doit être remplacé par le nom souhaité (ce nom est important pour les collisions)
+
+- Comportement: (ce que fait l'objet, sans affecter ceux déjà existant)
+  - Pour ajouter un comportement unique à l'objet, il faut ajouter la fonction qui gère ce comportement, et l'appeler dans auto_actions().
+  - Le comportement peut être un déplacement, du tir, ou n'importe quoi d'autres.
+  ATTENTION
+  - Si le comportement influence la position de l'objet, il est recommandé de modifier la vélocité (velocityX/Y) de l'objet, plutôt que ça position (x/y).
+
+- Collisions: (comment l'objet est affecté/affecte lors d'une collision)
+  - dans la fonction "check_collision(...)", il faut ajouter un case au switch global.
+  - Ce case correspond à "group_name".
+  - Dans ce case, on met un switch, dont chaque case correspond aux .group affectant/étant affectés par notre objet.
+  - Chaque sous-cases décrit ce qu'il se passe pour les deux objets lors d'une collision.
+  ATTENTION:
+  - Il est recommandé d'ajouter le case de cette objet dans les cases avec qui il a une collision:
+  - Ex: Si vous avez ajouté le sous-case "player" pour cette objet, il faut quand dans le case "player" vous ajoutiez le sous-case du groupe de cette objet.
+
+- Instanciation:
+  - Il faut d'abord créer une image (de imgs.js), et une hitBox (de hitBox.js).
+  - Il faut ensuite faire l'instruction suivante:
+  new Subclass_Name(x, y, image, hitBox /*additional args*/)
+  - Et.C'est.Tout. Pas besoin de stocker l'objet dans une variable ou une liste. Cela se fait automatiquement dans une liste globale ;).
+
+
+
+
+
+
+Pour CRÉER UN NOUVEAU MENU dans interface.js
+
+Un menu, c'est soit un écran avec des boutons qui ouvrent d'autres "menu".
+Soit c'est le jeu (instanciaction des objets) et des boutons dessus.
+
+Il doit contenir AU MOINS un boutons (My_Button).
+
+...flemmes d'expliquer pour l'instant

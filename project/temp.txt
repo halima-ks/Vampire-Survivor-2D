@@ -1,0 +1,24 @@
+
+class My_Object {
+// PROPRIÉTÉS
+//-- d'instance
+position, velocité, vitesse
+image, hitBox
+group
+//-- de classe
+instances (liste)
+
+// MÉTHODES
+action() //déplacement, vérification de collision, auto_actions()
+animate()
+draw()
+//- réservé aux sous-classes
+auto_actions() //suite de action()
+
+
+// EFFET DE COLLISION
+die()
+recul(objet) // éloigne l'instance de l'objet
+}
+
+

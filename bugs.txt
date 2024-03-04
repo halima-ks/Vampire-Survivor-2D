@@ -1,0 +1,9 @@
+
+Le Player est immunisé au Projectile ...:
+  - lorsque il fait un déplacement diagonal vers un object Static (uniquement quand la position relative de l'objet est opposée au déplacement. Ex: déplacement haut-gauche vers un Static positionné en bas-droite du perso)
+  - lors d'un déplacement uni-directionnel entre deux Static, résultant d'un aller-retour permanent, perpendiculaire au mouvement (ex: déplacement droite, le perso fait haut-bas-haut-bas)
+
+
+HitBox_Mask est parfois inactive:
+  - se produit quand le jeu est lancé rapidement. Étant donnée que le mask se créé via une image dessiner sur le Canvas, quand elle est dessiné trop rapidement, la mask se créé sur une image "vide" (donc aucun pixel n'aura de collision)
+  - FIX: lors de la vérification de collision (à chaque refresh), si aucun pixel du mask n'est active, on update le mask

@@ -1,0 +1,222 @@
+
+Cours:
+ - Moteurs de Jeu (L3)
+
+Contributeurs:
+ - Valentin GUILLON, 20002588
+ - Halima KSAL, 19000939
+ - Cheïmâa FAKIH, 21001308
+
+Projet:
+ - Vampire Survivor like, 2D
+
+
+Librairie:
+ - dat.GUI
+ - Math (de JavaScript)
+
+
+Classes de JavaScript:
+ - Image()
+ - Audio()
+
+
+Classes créées:
+ - Camera()
+ - HitBox_Circle(...)
+ - HitBox_Mask(...)
+ - HitBox_Rect(...)
+ - Jukebox()
+ - My_Button(...)
+ - My_Circle(...)
+ - My_Img(...)
+ - My_Object(...)
+
+
+Sous classes créées:
+de My_Button:
+  - Button_with_text(...)
+de My_Img:
+  - My_Animated_Img(...)
+de My_Object:
+  - Ally_Projectile(...)
+  - Bonus_Invicibility(...)
+  - Enemy_Chasing(...)
+  - Enemy_Projectile(...)
+  - Enemy_Turret(...)
+  - Obstacle(...)
+  - Player(...)
+
+
+
+Fichiers:
+  - audio.js
+  - camera.js
+  - hitBox.js
+  - imgs.js
+  - interface.js
+  - map.js
+  - map_constructor.js
+  - objects.js
+  - script.js
+  - tools.js
+
+
+
+
+
+
+
+Comment fonctionne le programme:
+ - Le jeu se déroule dans des "menu" ou "fenêtre".
+ Chaque fenêtre est composé d'instances de My_Img, My_Object et My_Button (ou sous-classes).
+ - Un clique sur un My_Button supprime toutes les instances existantes, puis en créé de nouvelles.
+ - Un menu (au sens classique du termes), n'a pas de My_Object.
+ Il permet uniquement d'ouvrir d'autres menus.
+ - Le programme possède une seule instance de Camera et de Jukebox, créées au lancement du programme.
+ - Jukebox charge et joue une music à chaque création de fenêtre.
+ - La caméra se fixe sur l'objet qu'on lui donne.
+ - A chaque "mise à jour" du jeu, les méthodes principales de My_Object sont appelées (action et animate).
+ On dessine ensuite les My_Img et My_Button sur le canvas.
+
+ - Chacunes des trois classes maîtresse (My_Img, My_Object, My_Button) possèdent une liste "instances" (static).
+ Facilitant l'accès à chacune de leurs instances (pour les créer, les mettre à jour ou les supprimer).
+
+
+
+
+
+
+
+objects.js
+ - Le coeur du programme.
+ - Il contient les classes décrivant le comportement de chaque object.
+ Ainsi que quelques méthodes pour instancier des objects prédéfinis.
+ 
+ - Un My_Object est composé d'une image (My_Img) et d'une HitBox (Mask, Rect ou Circle).
+ Il est possible qu'il n'ai qu'un seul, ou aucun de ces deux élements.
+
+ - My_Object possède une propriété importantes nommé "group".
+ Cette propriété est observée lors d'une collision, afin de décider que faire des deux objects concernés.
+ 
+ - My_Object décrit le comportement commun à tous les objects (déplacement et collision).
+ - Ses méthodes principales sont action(), animate() et draw():
+   - action() est fragmentée en 3 parties:
+     - update_status(), met à jour l'état de vie de l'objet (dying et dead)
+     - check_collisions(...), compare la hitBox de l'objet avec celle de tous les autres objets
+     - auto_actions(), réservé aux sous-classes, décrit le comportement de celles-ci.
+   - animate() permet aux images animées de passer à la frame suivante.
+   - draw() dessine l'image sur le canvas
+
+ - Chaque sous-classes définis le comportement d'un objet.
+ - Elles ont chacunes un nom de "group" unique.
+ - Le comportement peut-être n'importe quoi, changement de direction, génération d'autres objets...
+
+
+
+
+
+imgs.js
+ - Contient les classes décrivant le comportement d'une image.
+ Ainsi que des méthodes pour dessiner des formes simples sur le canvas
+
+ - My_Img est une instance de Image() de JavaScript, créée à l'initialisation de la classe.
+ - Dans le cas de My_Animated_Img, cette instance est remplacée par une nouvelle à chaque changement de frames.
+
+ - My_Img possède une icone (optionnelle), dessinée quand l'image est à l'extérieur du canvas, sur les bords de de celui-ci.
+ Plus l'image est loin, plus l'icone est petite.
+
+ - My_Animated_Img est initialisé en donnant une liste de nom de fichiers.
+ Un animation de mort peut également être donnée en plus.
+
+
+
+
+
+hitBox.js
+ - Contient les classes décrivant le comportement d'une HitBox.
+ - Les classes Circle et Rect définissent, par leur taille, quels pixels font parties de la hitBox.
+ - Pour Mask, ils sont définis par une liste de booléens ("true" pour actif)
+
+ - Mask est créé à partir d'une image transparente, dont les pixels noirs délimitent la hitBox.
+ On dessine cette image sur une zone du canvas (à la création), et remplis la list de booléens en fonction des pixels de cette zone.
+
+
+
+
+
+
+map.js
+ - Contient des listes d'entiers représentant des cartes (géographique).
+ - Chaque entiers correspond à ce que l'on souhaite avoir à cette position.
+ Cela peut être:
+   - une image (tile d'une tilemap),
+   - un objet
+   - les deux
+
+
+
+
+
+map_constructor.js
+ - Contient des méthodes générant images et objets, en fonction des cartes utilisées.
+ - Chaque méthode correspond à une carte de map.js.
+
+
+
+
+
+camera.js
+ - Contient la classe Camera.
+ - Elle fait en sorte que l'objet donné soit au centre du canvas.
+ Pour cela, elle déplace tous les objets et les images.
+
+
+
+audio.js
+ - Contient la classe Jukebox.
+ - Elle possède des méthodes permettant de charger et jouer une musique.
+
+
+
+
+
+
+
+interface.js
+ - Contient la classe My_Button.
+ Ainsi que des méthodes générants objets, images et buttons.
+ Ainsi des instances exportables de Camera() et Jukebox() (une de chaque).
+
+
+
+
+
+
+
+tools.js
+ - Contient des fonctions utilisé par les autres fichiers.
+ - Par exemple, donner un entier, dire si un cercle est dans un rectangle, ou encore, normaliser un vecteur.
+
+
+
+
+input.js
+ - Lance des écoutes d'input (clique et touches).
+ - Execute les actions correspondant aux inputs.
+   - clique, execute le bouton sur lequel la souris est
+   - touche, modifie la vélocité du joueur
+
+
+
+
+
+script.js
+ - Est le premier pas dans le programme.
+ - Contient les fonctions de mises à jour des éléments du jeu.
+   - animations des images animées
+   - actions des objets
+   - placement de la caméra
+   - dessin des images
+ Ainsi que ce qui a trait à dat.GUI.
+

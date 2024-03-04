@@ -1,0 +1,36 @@
+
+Pour trier les My_Object:
+ - Hors-canvas
+ - dying
+ - y du centre des mask
+ - y de l'objet
+
+
+
+
+améliorer le recul, pour faire comme le rect avec le mask
+améliorer le recul avec le rect, conserver la position des objets avant déplacement
+
+
+
+ignore le draw des images out of canvas
+
+
+
+
+
+
+
+animation de spawn des ennemis
+
+
+spawn des mobs, ne doit pas etre hors map, ni dans un obstacle
+
+
+ajouter score, montré en gme over
+
+
+projectile black hole
+
+
+mettre à jour tous les timestamp quand le jeu est freeze (ajouté le temps passé. PS: en fait je crois pas que c'est aussi simple)
